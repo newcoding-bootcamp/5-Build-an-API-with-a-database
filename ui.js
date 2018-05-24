@@ -4,6 +4,8 @@ function doSearch() {
   var query = document.querySelector('#search-input').value;
   var outputDiv = document.querySelector('#search-results');
   displayRemoveChildren(outputDiv);
+
+  addText(`Searching for ${query}...`, outputDiv);
   
   searchByName(query).then(function(res) {
     if(res.length < 1) {
@@ -12,6 +14,7 @@ function doSearch() {
     }
 
     var table = displayPokemonList(res);
+    displayRemoveChildren(outputDiv);
     outputDiv.appendChild(table);
   });
 }
@@ -26,6 +29,9 @@ function displayPokemonList(pokemons) {
     var tdName = addNode('td', row);
 
     var imgUrl = pokemons[rI].sprites.front_default;
+    if(!imgUrl) {
+      imgUrl = 'missing.png';
+    }
     var img = addNode('img', tdImg);
     img.src = imgUrl;
     addText(pokemons[rI].name, tdName);
@@ -34,7 +40,12 @@ function displayPokemonList(pokemons) {
   return table;
 }
 
-function displayMakeTeam() {}
+function displayMakeTeam() {
+  var teamName = prompt('What would you like to name your team?');
+  if(teamName.length > 0) {
+    createTeam(teamName);
+  }
+}
 function displayDeleteTeam(teamId) {}
 
 function displayPokemonTeams() {}
