@@ -48,10 +48,24 @@ function createTeam(name) {
   localStorage.setItem(teamTable, JSON.stringify(db));
 }
 
-function getTeams() {}
-function getTeam(id) {}
+function getTeams() {
+  var db = JSON.parse(localStorage.getItem(teamTable));
+  return db;
+}
+function getTeam(id) {
+  return getTeams()[id];
+}
+
 function deleteTeam(id) {}
-function editTeam(id, name) {}
+function editTeam(id, data) {
+  var db = JSON.parse(localStorage.getItem(teamTable));
+  if(!db[id]) {
+    throw new Error('No team found');
+  }
+
+  db[id] = data;
+  localStorage.setItem(teamTable, JSON.stringify(db));
+}
 
 function addToTeam(teamId, pokemonId) {}
 function removeFromTeam(teamId, pokemonId) {}

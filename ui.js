@@ -27,6 +27,7 @@ function displayPokemonList(pokemons) {
     var row = addNode('tr', body);
     var tdImg = addNode('td', row);
     var tdName = addNode('td', row);
+    var tdAdd = addNode('td', row);
 
     var imgUrl = pokemons[rI].sprites.front_default;
     if(!imgUrl) {
@@ -35,6 +36,11 @@ function displayPokemonList(pokemons) {
     var img = addNode('img', tdImg);
     img.src = imgUrl;
     addText(pokemons[rI].name, tdName);
+
+    var addButton = addNode('button', tdAdd);
+    addText('add to team', addButton);
+    addButton.dataset.id = pokemons[rI].name;
+    addButton.setAttribute("onclick","displayAddToTeam(event);");
   }
 
   return table;
@@ -46,6 +52,23 @@ function displayMakeTeam() {
     createTeam(teamName);
   }
 }
+function displayAddToTeam(event) {
+  console.log('add to team');
+  
+  var teams = getTeams();
+  var teamIds = Object.keys(teams);
+  if(teamIds.length < 1) {
+    return;
+  }
+
+  var id = teamIds[0];
+  var pokemon = event.target.dataset.id;
+  if(!teams[id].members.includes(pokemon)) {
+    teams[id].members.push(pokemon);
+    editTeam(id, teams[id]);
+  }
+}
+
 function displayDeleteTeam(teamId) {}
 
 function displayPokemonTeams() {}
