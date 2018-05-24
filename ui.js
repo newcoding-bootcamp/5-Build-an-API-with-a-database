@@ -1,6 +1,21 @@
 var attributes = ['', 'name'];
 
-function doSearch() {}
+function doSearch() {
+  var query = document.querySelector('#search-input').value;
+  var outputDiv = document.querySelector('#search-results');
+  displayRemoveChildren(outputDiv);
+  
+  searchByName(query).then(function(res) {
+    if(res.length < 1) {
+      addText('Found nothing', outputDiv);
+      return;
+    }
+
+    for(var rI = 0; rI < res.length; rI++) {
+      console.log(res[rI].name);
+    }
+  });
+}
 
 function displayPokemonList(pokemons) {}
 
