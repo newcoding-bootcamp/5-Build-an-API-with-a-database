@@ -11,13 +11,28 @@ function doSearch() {
       return;
     }
 
-    for(var rI = 0; rI < res.length; rI++) {
-      console.log(res[rI].name);
-    }
+    var table = displayPokemonList(res);
+    outputDiv.appendChild(table);
   });
 }
 
-function displayPokemonList(pokemons) {}
+function displayPokemonList(pokemons) {
+  var table = addNode('table');
+  var body = addNode('tbody', table);
+
+  for(var rI = 0; rI < pokemons.length; rI++) {
+    var row = addNode('tr', body);
+    var tdImg = addNode('td', row);
+    var tdName = addNode('td', row);
+
+    var imgUrl = pokemons[rI].sprites.front_default;
+    var img = addNode('img', tdImg);
+    img.src = imgUrl;
+    addText(pokemons[rI].name, tdName);
+  }
+
+  return table;
+}
 
 function displayMakeTeam() {}
 function displayDeleteTeam(teamId) {}
